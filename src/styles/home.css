@@ -1,0 +1,32 @@
+h2 {
+    margin-left: 3%
+}
+
+hr {
+    max-width: 95%;
+    margin-left:20px; 
+    margin-right: 20px; 
+    margin-bottom: -10px;
+}
+
+.tarjeta {
+    width: 150px; 
+    height:150px;
+}
+.tarjeta:hover {
+    cursor: pointer; 
+    border: 1px solid blue; 
+  }
+
+.titulo {
+    font-size: small;
+    color: white;
+}
+
+.contenedor-juegos{
+    padding-right: 3%;
+    padding-left: 3%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
