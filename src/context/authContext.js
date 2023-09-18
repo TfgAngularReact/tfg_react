@@ -14,19 +14,23 @@ export const useAuth = () => {
 
  export function AuthProvider({children}){
     
-    const [user, setUser] = useState({});
-    const [userData, setUserData] = useState({});
+    const [user, setUser] = useState(null);
+    const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         console.log("BBBBBBBB")
         onAuthStateChanged(auth, async currentUser =>{
-            setUser(currentUser)
-            
-            const data = await getDocument('Usuarios', currentUser.uid)
-            
-            setUserData(data)
-            setLoading(false)
+            if(currentUser !== null){
+                const data = await getDocument('Usuarios', currentUser.uid)
+                setUser(currentUser)
+                setUserData(data)
+                setLoading(false)
+            }
+            else{
+                setLoading(false)
+            }
+
         })
     }, [])
 

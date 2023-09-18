@@ -1,0 +1,38 @@
+.lista:hover{
+    cursor: pointer;
+    
+}
+.lista{
+    background-color: #2e3a50 !important;
+    align-items: center;
+}
+
+.imagen-juegos{
+    max-width: 120px; 
+    max-height:92px;
+    border-radius: 5%;
+}
+
+
+.clase1{
+    z-index: 5;
+    
+}
+
+.clase2{
+    z-index: 4;
+    margin-left:-60px;
+}
+
+.clase3{
+    z-index: 3;
+    margin-left:-60px;
+}
+.clase4{
+    z-index: 2;
+    margin-left:-60px;
+}
+.clase5{
+    z-index: 1;
+    margin-left:-60px;
+}

@@ -4,6 +4,12 @@
     background-color: transparent !important;
   }
 
+.resena{
+    background-color: #2e3a50 !important;
+    align-items: center;
+    width: 85%;
+}
+
 
   
 .imagen-resena img{

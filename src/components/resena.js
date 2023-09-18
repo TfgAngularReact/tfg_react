@@ -19,8 +19,7 @@ const Resena = ({parametro, actualizarPadre}) =>{
     useEffect(() => {
         let isMounted = true;
         const fetchUsuario = async () => {
-            console.log("AAAA");
-            console.log("Carga reseña",parametro)
+
             const user = await getDocument('Usuarios', parametro.usuario);
             if (isMounted) {
                 setUsuario(user);
@@ -93,28 +92,26 @@ const Resena = ({parametro, actualizarPadre}) =>{
     }     
 
     const isLiked = () => {
-        if(userData.resenas_like.length < 3){
-           // console.log(userData)
-        }
+        
         //console.log(userData.resenas_like.includes(resena.id), userData.resenas_like.length)
         return userData.resenas_like.includes(resena.id)
     }
 
 
     return (
-            <div className="tarjeta card card-body">
+            <div className="resena card card-body">
                 <div className="cabecera">
                     <div className="imagen-resena">
                         <img src={juego.portada} alt="" className="imagen-resena"/>
                     </div>
                     <h3>
-                        <Link  style={{textDecoration: 'none'}}>
+                        <Link  to={`/${resena.id_juego}`} style={{textDecoration: 'none'}} >
                             {juego.nombre}
                         </Link>
                     </h3>
                 </div>
                 <div>
-                    <Rating initialValue={resena.puntuacion} readonly={true} allowFraction={true}>
+                    <Rating initialValue={resena.puntuacion} readonly={true} allowFraction>
                     </Rating>
                 </div>
                 <div className="cuerpo">
@@ -128,26 +125,26 @@ const Resena = ({parametro, actualizarPadre}) =>{
                             <img src={usuario.img_perfil} alt=""/>
                         </div>
                         <p className="usuario">
-                            <Link style={{textDecoration: 'none'}}>
+                            <Link style={{textDecoration: 'none'}} to={`perfil/${resena.usuario}`}>
                                 <strong >
                                     {usuario.nickname}
                                 </strong>
                             </Link>
                         </p>
                     </div>
-                    {isLiked() ? 
-                    <>
-                        <button className="btn" onClick={Like}>
-                            <i style={{color: "red"}} className="bi bi-heart-fill"></i>
-                        </button>
-                    </>
-                    :
-                    <>
-                        <button className="btn" onClick={Like}>
-                            <i className="bi bi-heart"></i>
-                        </button>
-                    </>
-                    }
+                    {userData && (
+                        <>
+                            {isLiked() ? 
+                                <button className="btn" onClick={Like}>
+                                    <i style={{color: "red"}} className="bi bi-heart-fill"></i>
+                                </button>
+                                :
+                                <button className="btn" onClick={Like}>
+                                    <i className="bi bi-heart"></i>
+                                </button>
+                            }
+                        </>
+                    )}
 
 
 

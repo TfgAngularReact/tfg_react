@@ -14,6 +14,9 @@ import { useEffect, useState } from 'react';
 import Registro from './layouts/registro';
 import { AuthProvider, useAuth } from './context/authContext';
 import Juegos from './layouts/juegos';
+import JuegoVista from './layouts/juegoVista';
+import Listas from './layouts/listas';
+import ListaVista from './layouts/listaVista';
 
 
 function App() {
@@ -24,10 +27,11 @@ function App() {
         onAuthStateChanged(auth, currentUser =>{
           if(currentUser){
             setUser(currentUser);  
+            console.log(user);
+
           }
         })
-        console.log(user);
-    })
+    }, [])
 
   return (
     <div className="App">
@@ -36,11 +40,17 @@ function App() {
           <Routes>
             <Route path="/" element={<Menu />}>
               <Route index element={<Home />} />
+              <Route path="/:idJuego" element={<JuegoVista />}/>
+              <Route path="lista/:idLista" element={<ListaVista/>} />
+
                 {user!=null ? (
                   <>
                   <Route path="juegos/:uid" element={<Juegos />} />
                   <Route path="resenas/:uid" element={<Resenas />} />
                   <Route path="perfil/:uid" element={<Perfil setUser={setUser}/>} />
+                  <Route path="listas/:uid" element={<Listas/>} />
+
+
 
                   <Route path="registro" element={<Navigate replace to="/" />} />
                   <Route path="login" element={<Navigate replace to="/" />} />
@@ -50,6 +60,8 @@ function App() {
                   <Route path="juegos/:uid" element={<Navigate replace to="/" />} />
                   <Route path="resenas/:uid" element={<Navigate replace to="/" />} />
                   <Route path="perfil/:uid" element={<Navigate replace to="/" />} />
+                  <Route path="listas/:uid" element={<Listas/>} />
+
 
                   <Route path="login" element={<Login />} />
                   <Route path="registro" element={<Registro />} />
