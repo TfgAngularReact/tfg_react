@@ -26,7 +26,9 @@ const ListaVista = (props) => {
         const fetchLista = async () => {
             list = await getDocument("Listas",idLista);
             setLista(list)
-            fetchJuegos()
+            if(list.juegos.length>0){
+                fetchJuegos()
+            }
         }
 
       if(idLista){
@@ -37,7 +39,7 @@ const ListaVista = (props) => {
     
     
 
-    if (!juegos || !lista) {
+    if (!lista) {
         return <div>Cargando...</div>; // Puedes mostrar un indicador de carga mientras se obtienen los datos
     }  
 
@@ -50,10 +52,24 @@ const ListaVista = (props) => {
             </div>
             
             <div style={{display: "flex",  alignItems: "center", flexWrap: "wrap", flexDirection:"row", justifyContent:"space-evenly"}}>
+                {
+                    juegos ? 
+                    (
+                        <>
+                            {juegos.map((documento) => (
+                                <Juego key={documento.id} juego={documento}/>
+                            ))}
+                        </>
 
-                {juegos.map((documento) => (
-                        <Juego key={documento.id} juego={documento}/>
-                        ))}
+                    )
+                    : 
+                    (
+                        <>
+                        Añade algún juego!
+                        </>
+                    )
+                }
+
 
             </div>
         </>

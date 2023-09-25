@@ -39,7 +39,7 @@ const Login = () => {
         <div className='wrapper'>
             <div className="row">
                     <div className="padre">
-                        <div className="tarjeta card card-body">
+                        <div className="formulario card card-body">
                                 <h2>Bienvenido</h2>
                             <form className="form-register" onSubmit={handleSubmit}>
                                 <input type="text" name="email" className="form-control" placeholder="Email" onChange={handleChange}></input>

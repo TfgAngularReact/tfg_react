@@ -68,7 +68,32 @@ const JuegoVista = () =>{
 
 
         }
-    }     
+    }  
+    
+    const jugado = async () =>{
+        if(!userData.jugados.includes(juego.id)){
+            const updatedState = { ...userData };
+            updatedState.jugados.push(juego.id);
+            console.log("USER", userData)
+            console.log("Juego", juego)
+
+            await updateDocument('Usuarios', updatedState, userData.uid)
+            
+            setUserData(updatedState);            
+
+        } else{
+
+            const elementoAEliminar = juego.id;
+            const indice = userData.jugados.indexOf(elementoAEliminar);
+            const estadoActualizado = { ...userData };
+
+            if (indice !== -1){
+                estadoActualizado.jugados.splice(indice, 1);
+            }
+            await updateDocument('Usuarios', estadoActualizado, userData.uid)
+            setUserData(estadoActualizado);
+        }
+    }  
 
 
     const isLiked = () => {
@@ -135,11 +160,11 @@ const JuegoVista = () =>{
                                 </button>
                             }
                             {isPlayed() ? 
-                                <button className="btn" onClick={Like}>
+                                <button className="btn" onClick={jugado}>
                                     <i style={{color: "red"}} className="bi bi-dpad-fill"></i>
                                 </button>
                                 :
-                                <button className="btn" onClick={Like}>
+                                <button className="btn" onClick={jugado}>
                                     <i className="bi bi-dpad"></i>
                                 </button>
                             }

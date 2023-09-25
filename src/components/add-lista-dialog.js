@@ -6,10 +6,8 @@ import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import '../styles/dialog.css';
 import TextField from '@mui/material/TextField';
+import { getDocumentos, getId, updateDocument } from '../services/fireStoreService';
 
-import { Rating } from "react-simple-star-rating";
-import { createDoc, getDocumentos, getId, updateDocument } from '../services/fireStoreService';
-import { Timestamp } from 'firebase/firestore';
 import { Checkbox, FormControlLabel } from '@mui/material';
 
 

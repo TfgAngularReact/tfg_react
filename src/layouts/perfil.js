@@ -22,10 +22,14 @@ const Perfil = ({setUser}) => {
     const [openDialogNewLista, setOpenDialogNewLista] = useState(false);
 
 
+
     const handleLogout = async () => {
         await signOut(auth)
         setUser(null)
         navigate("/")
+    }
+    const handleSettings = async () => {
+        navigate("/settings")
     }
 
     useEffect(()=>{
@@ -55,6 +59,7 @@ const Perfil = ({setUser}) => {
     }
 
     const handleOpenDialogNewLista = () => {
+        console.log("ASADASDDAS")
         setOpenDialogNewLista(true);
       };
 
@@ -82,7 +87,7 @@ const Perfil = ({setUser}) => {
                         {userData.nickname}
                         {isYourUser() ?
                             <>
-                                <button onClick={handleLogout}>
+                                <button onClick={handleSettings}>
                                     EDITAR PERFIL
                                 </button>     
                                 <button onClick={handleLogout}>
@@ -124,19 +129,29 @@ const Perfil = ({setUser}) => {
                     <h6 style={{marginLeft: "2%", marginTop:"5%"}}>
                         LISTAS
                     </h6>
-                    <button onClick={handleOpenDialogNewLista} className="btn">
-                            <i class="bi bi-plus-circle"></i>Crear una lista
-                    </button>
-                    <NewListaDialog open={openDialogNewLista} onClose={handleCloseDialogNewLista} usuario={userData} />
+                    {isYourUser() ? 
+                    <>
+                        <button onClick={handleOpenDialogNewLista} className="btn">
+                                <i className="bi bi-plus-circle"></i>Crear una lista
+                        </button>
+                        <NewListaDialog open={openDialogNewLista} onClose={handleCloseDialogNewLista} usuario={userData} actualizarPadre={actualizaValor}/>
+                    </>
+
+                    :
+
+                    <></>
+
+                    }
+
                 </div>
                 
                 <hr className="my-3" style={{marginLeft:"20px", marginRight:"20px", marginBottom:"-60px"}}/>
                 <Grid container spacing={2}>
                     
-                    {listas.map((object) => (
-                            console.log("Lista",object),
+                    {listas.map((lista) => (
+                            console.log("Lista",lista),
                             <Grid item xs={6} md={4}>
-                                    <Lista key={object.id} lista={object}></Lista>
+                                    <Lista key={lista.id} lista={lista}></Lista>
                             </Grid>
                     ))}
 

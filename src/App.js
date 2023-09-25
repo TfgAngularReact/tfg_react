@@ -17,6 +17,8 @@ import Juegos from './layouts/juegos';
 import JuegoVista from './layouts/juegoVista';
 import Listas from './layouts/listas';
 import ListaVista from './layouts/listaVista';
+import Search from './layouts/search';
+import Settings from './layouts/settings';
 
 
 function App() {
@@ -42,6 +44,8 @@ function App() {
               <Route index element={<Home />} />
               <Route path="/:idJuego" element={<JuegoVista />}/>
               <Route path="lista/:idLista" element={<ListaVista/>} />
+              <Route path="search/:texto" element={<Search/>} />
+
 
                 {user!=null ? (
                   <>
@@ -51,7 +55,7 @@ function App() {
                   <Route path="listas/:uid" element={<Listas/>} />
 
 
-
+                  <Route path="settings" element={<Settings/>}/>
                   <Route path="registro" element={<Navigate replace to="/" />} />
                   <Route path="login" element={<Navigate replace to="/" />} />
                 </>

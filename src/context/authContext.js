@@ -19,7 +19,6 @@ export const useAuth = () => {
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        console.log("BBBBBBBB")
         onAuthStateChanged(auth, async currentUser =>{
             if(currentUser !== null){
                 const data = await getDocument('Usuarios', currentUser.uid)

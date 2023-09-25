@@ -20,11 +20,32 @@ section {
   background-color: #2e3a50 !important;
   align-items: center;
 }
+.formulario{
+  background-color: #2e3a50 !important;
+  align-items: center;
+}
+
 .padre{
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 100%;
+}
+.img-perfil img{
+  max-width: 145px;
+  max-height: 115px;
+  border-radius: 50%;
+}
+
+.img-perfil:hover{
+  cursor: pointer;
+  border-style: solid;
+  border-width: 3px;
+  border-color: aqua;
+}
+
+.image-button:focus{
+  outline: none;
 }
 
 .form-login{

@@ -13,14 +13,19 @@ const Lista = (props) =>{
     const { lista } = props;
     const [juegos, setJuegos] = useState(null);
     const navigate = useNavigate();
+    const [imagenes, setImagenes] = useState([0,1,2])
 
 
     useEffect(() => {
-
+        console.log("IMAGENES", imagenes)
       
         const fetchJuegos = async () => {
-            const datos = await getDocumentos("Juegos", "in", "id", lista.juegos)
-            setJuegos(datos.slice(0, 5))
+            if(lista.juegos.length > 0){
+                const datos = await getDocumentos("Juegos", "in", "id", lista.juegos)
+                setJuegos(datos.slice(0, 3))
+            }
+
+
         };
 
       if(lista){
@@ -31,7 +36,7 @@ const Lista = (props) =>{
     
     
 
-    if (!lista || !juegos) {
+    if (!lista ) {
         return <div>Cargando...</div>; // Puedes mostrar un indicador de carga mientras se obtienen los datos
     }  
 
@@ -43,24 +48,55 @@ const Lista = (props) =>{
     return (
         <div className="card cardbody lista" onClick={handleClick} style={{display:"flex", flexDirection:"column", padding:"10px"}}>
             <div  style={{display:"flex", flexDirection:"row"}}>
-                {juegos.map((item, i) => (
-                <div
-                    key={i}
-                    style={{
-                    maxWidth: '120px',
-                    maxHeight: '92px',
-                    boxShadow: '2px 2px 4px 0 rgba(20, 20, 20, 0.3)',
-                    }}
-                    className={`clase${(i % 5) + 1}`}
-                >
-                    <img
-                    style={{ border: '1px solid #000' }}
-                    className="imagen-juegos"
-                    src={item.portada}
-                    alt=""
-                    />
-                </div>
-                ))}
+                {
+                    juegos ? (
+                        <>
+                            {juegos.map((item, i) => (
+                            <div
+                                key={i}
+                                style={{
+                                maxWidth: '120px',
+                                maxHeight: '92px',
+                                boxShadow: '2px 2px 4px 0 rgba(20, 20, 20, 0.3)',
+                                }}
+                                className={`clase${(i % 3) + 1}`}
+                            >
+                                <img
+                                style={{ border: '1px solid #000' }}
+                                className="imagen-juegos"
+                                src={item.portada}
+                                alt=""
+                                />
+                            </div>
+                            ))}
+                        </>
+
+                    )
+                    :
+                    (
+                        <>
+                            {imagenes.map((item, i) => (
+                            <div
+                                key={i}
+                                style={{
+                                maxWidth: '120px',
+                                maxHeight: '92px',
+                                boxShadow: '2px 2px 4px 0 rgba(20, 20, 20, 0.3)',
+                                }}
+                                className={`clase${(i % 5) + 1}`}
+                            >
+                                <div
+                                style={{ border: '1px solid #fff' }}
+                                className="sin-juego"
+
+                                />
+                            </div>
+                            ))}
+                        </>
+                    )
+                }
+                
+
             </div>
                 <div className="card-footer" style={{color:"white"}}>
                     {lista.name}

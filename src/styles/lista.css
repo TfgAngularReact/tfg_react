@@ -13,6 +13,13 @@
     border-radius: 5%;
 }
 
+.sin-juego{
+    width: 120px; 
+    height:68px;
+    border-radius: 5%;
+    background-color: black;
+}
+
 
 .clase1{
     z-index: 5;
