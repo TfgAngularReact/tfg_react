@@ -3,6 +3,9 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import Juego from "../components/juego"
 import { getCollection, getDocumentos } from "../services/fireStoreService"
+import '../styles/home.css';
+import { Grid } from "@mui/material"
+
 
 const Search = () => {
 
@@ -37,11 +40,17 @@ return(
     <div style={{marginLeft:"5%", margintTop:"3%"}}>
         <h4>Resultados para: {texto}</h4>
 
-        <div style={{display: "flex",  alignItems: "center", flexWrap: "wrap", flexDirection:"row", justifyContent:"space-evenly"}}>
+        <div className="contenedor-juegos"s>
 
-            {resultados.map((documento) => (
-                    <Juego key={documento.id} juego={documento}/>
+        <Grid container spacing={2}>
+                {resultados.map((documento) => (
+                    <Grid key={documento.id} item xs={12} md={3}>
+                        <Juego  juego={documento}/>
+                    </Grid>
                     ))}
+
+                </Grid>
+
 
         </div>
     </div>

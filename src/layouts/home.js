@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react"
 import { getJuegosNuevos, getResenasPopulares } from "../services/fireStoreService";
 import Juego from '../components/juego';
+import { Grid } from "@mui/material"
 
 import '../styles/home.css';
 import Resena from "../components/resena";
+import cargaTiempoService from "../services/cargaTiempoService";
 
 
 
@@ -14,6 +16,7 @@ const Home = () => {
 
     let mounted = false
 
+
     const fetchJuegos = async () => {
         const nuevosJuegos = await getJuegosNuevos();
         setJuegos(nuevosJuegos);
@@ -21,23 +24,52 @@ const Home = () => {
 
     };
     const fetchResenas = async () => {
-        const resenasPopulares = await getResenasPopulares();
-        setResenas(resenasPopulares);
-        console.log(resenasPopulares);
-    };
+        // Inicia el temporizador al comienzo de la función
+        const inicio = performance.now();
+      
+        try {
+          const resenasPopulares = await getResenasPopulares();
+          setResenas(resenasPopulares);
+      
+          // Detiene el temporizador al final de la función
+          const fin = performance.now();
+      
+          // Calcula el tiempo total de ejecución
+          const tiempoTotal = fin - inicio;
+      
+          // Devuelve el tiempo total o realiza cualquier otra acción deseada
+          return tiempoTotal;
+        } catch (error) {
+          // Maneja errores si es necesario
+          throw error;
+        }
+      };
 
 
     useEffect(() => {
+
+        const componente = 'home'; // Puedes usar un nombre único para identificar el componente
+        cargaTiempoService.startTimer(componente);
+    
         if (!mounted) {
             fetchJuegos();
         }
-        fetchResenas();
+        fetchResenas().then(tiempoTotal => {
+            console.log(`La función se ejecutó en ${tiempoTotal} ms`);
+          })
+          .catch(error => {
+            console.error('Ocurrió un error:', error);
+          });;
+
+        const tiempoCarga = cargaTiempoService.stopTimer(componente);
+        console.log(`Tiempo de carga del componente <Home>: ${tiempoCarga} ms`);
     }, [valor]);
 
     const actualizaValor = () => {
         setValor(valor+1)
     }
     return(
+
         <div>
             <h2>
                 NOVEDADES
@@ -57,10 +89,14 @@ const Home = () => {
             <hr className="my-3" />
 
             <div className="contenedor-juegos">
-                {resenas.map((parametro)=>(
-                    console.log("Reseñas id",parametro.id),
-                    <Resena key={parametro.id} parametro={parametro} actualizarPadre={actualizaValor}/>
-                ))}
+                <Grid container spacing={2}>
+                    {resenas.map((resena) => (
+                            <Grid key={resena.id} item xs={12} md={6}>
+                                    <Resena  parametro={resena} actualizarPadre={actualizaValor}></Resena>
+                            </Grid>
+                    ))}
+
+                </Grid>
                 
             </div>
         </div>

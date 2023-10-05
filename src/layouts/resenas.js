@@ -57,9 +57,8 @@ const Resenas = () => {
 
                 <Grid container spacing={2}>
                     {resenas.map((resena) => (
-                            console.log("RESEÑA",resena),
-                            <Grid item xs={12} md={4}>
-                                    <Resena key={resena.id} parametro={resena} actualizarPadre={actualizaValor}></Resena>
+                            <Grid key={resena.id} item xs={12} md={4}>
+                                    <Resena  parametro={resena} actualizarPadre={actualizaValor}></Resena>
                             </Grid>
                     ))}
 

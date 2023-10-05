@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 
 const Juego = (props) =>{
     const { juego } = props
-    console.log("Juego",juego)
     return (
         <Link to={`/${juego.id}`} key={juego.id} className="card tarjeta" style={{textDecoration: 'none', color: 'white'}}> 
             <img src={juego.portada} className="card-img-top" style={{maxWidth:'100%', maxHeight:'100%'}} />

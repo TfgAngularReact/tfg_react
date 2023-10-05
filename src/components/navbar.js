@@ -19,7 +19,7 @@ function Menu() {
 
   return (
     <>
-        <Navbar expand="lg" width className="navBg" variant="dark">
+        <Navbar expand="lg"  className="navBg" variant="dark">
             <Container>
                 <Navbar.Brand as={Link} to="/">TfgReact</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -27,10 +27,11 @@ function Menu() {
                 <Nav className="me-auto">
                     {user != null ? (
                         <>
-                        <Nav.Link as={Link} to="/">Home</Nav.Link>
-                        <Nav.Link as={Link} to={`/resenas/${user.uid}`}>Tus reseñas</Nav.Link>
+                        <Nav.Link as={Link} to={`/juegos/${user.uid}`}>Mis juegos</Nav.Link>
+                        <Nav.Link as={Link} to={`/resenas/${user.uid}`}>Mis reseñas</Nav.Link>
+                        <Nav.Link as={Link} to={`/listas/${user.uid}`}>Mis Listas</Nav.Link>
                         <Nav.Link as={Link} to={`/perfil/${user.uid}`}>Perfil</Nav.Link>
-                        <Nav.Link as={Link} to={`/juegos/${user.uid}`}>Tus juegos</Nav.Link>
+
                         
                         </>
 
@@ -43,8 +44,8 @@ function Menu() {
                         </>
                     )}
                         <div className="input-group mb-3" style={{width:"30%"}}>
-                            <input type="text" className="form-control" placeholder="Buscar" aria-label="Username" onChange={(e) => setTexto(e.target.value)}
-                        onKeyDown={handleKeyPress} aria-describedby="basic-addon1" style={{backgroundColor:"#2e3a50"}}/>
+                            <input type="text" className="form-control buscador" placeholder="Buscar" aria-label="Username" onChange={(e) => setTexto(e.target.value)}
+                        onKeyDown={handleKeyPress} aria-describedby="basic-addon1" />
                         </div>
                         
                 </Nav>

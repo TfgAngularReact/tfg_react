@@ -101,7 +101,7 @@ const Registro = () => {
                     <div className="padre">
                         <div className="formulario card card-body">
                                 <h2>Registrarse</h2>
-                            <form className="form-register" onSubmit={handleSubmit}>
+                            <form className="form-register" style={{alignItems:"center", display: "inline-flex", flexDirection: "column", alignContent: "center"}} onSubmit={handleSubmit}>
                                 <input type="text" name="email" className="form-control" placeholder="Email" onChange={handleChange}></input>
                                 <input type="text" name="nickname" className="form-control mt-4" placeholder="Usuario" onChange={handleChange}></input>
                                 <input type="password" name="password" className="form-control mt-4" placeholder="Contraseña" onChange={handleChange}></input>

@@ -6,6 +6,8 @@ import { getDocumentos } from "../services/fireStoreService";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import '../styles/lista.css';
+import cargaTiempoService from "../services/cargaTiempoService";
+import { useLayoutEffect } from "react";
 
 const Lista = (props) =>{
 
@@ -16,8 +18,12 @@ const Lista = (props) =>{
     const [imagenes, setImagenes] = useState([0,1,2])
 
 
+    useLayoutEffect(()=>{
+        const componente = 'lista'; // Puedes usar un nombre único para identificar el componente
+        cargaTiempoService.startTimer(componente);
+    },[])
+
     useEffect(() => {
-        console.log("IMAGENES", imagenes)
       
         const fetchJuegos = async () => {
             if(lista.juegos.length > 0){
@@ -30,7 +36,10 @@ const Lista = (props) =>{
 
       if(lista){
         fetchJuegos()
+        const tiempoCarga = cargaTiempoService.stopTimer("lista");
+        console.log(`Tiempo de carga del componente <lista>: ${tiempoCarga} ms`);
       }
+
 
       }, [lista]);
     

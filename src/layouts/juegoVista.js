@@ -6,6 +6,7 @@ import { Rating } from "react-simple-star-rating";
 
 import AddResenaDialog from "../components/add-resena-dialog";
 import AddListaDialog from "../components/add-lista-dialog";
+import cargaTiempoService from "../services/cargaTiempoService";
 
 
 const JuegoVista = () =>{
@@ -20,12 +21,17 @@ const JuegoVista = () =>{
 
 
     useEffect(()=>{
+        const componente = 'juego'; // Puedes usar un nombre único para identificar el componente
+        cargaTiempoService.startTimer(componente);
+
         const cargaJuego = async () => {
             const datos = await getDocument('Juegos', idJuego);
-            console.log(datos);
             setJuego(datos);
         }
         cargaJuego();
+        
+        const tiempoCarga = cargaTiempoService.stopTimer(componente);
+        console.log(`Tiempo de carga del componente <juego>: ${tiempoCarga} ms`);
     }, [])
 
 
@@ -36,8 +42,7 @@ const JuegoVista = () =>{
 
             const updatedState = { ...userData };
             updatedState.likes.push(juego.id);
-            console.log("USER", userData)
-            console.log("Juego", juego)
+
 
             await updateDocument('Usuarios', updatedState, userData.uid)
             await updateDocument('Juegos', updateJuego, juego.id)
@@ -133,7 +138,7 @@ const JuegoVista = () =>{
     return (
         <div style={{backgroundImage:`linear-gradient(0deg, rgb(36, 49, 77) 20%, rgba(36, 49, 77, 0.6)),url(${juego.portada})`, position: 'relative', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundSize: 'cover', width: '100wh', height: '400px'}}>
            <div style={{marginLeft: '5%', marginRight:'5%', paddingTop: '10%', display: 'flex', flexDirection: 'row', justifyContent: 'space-betwen'}}>
-                <div style={{display:'flex', flexDirection:'column'}}>
+                <div style={{display:'flex', flexDirection:'column', marginRight:"50px"}}>
                     <h4>
                         {juego.nombre}
                     </h4>
@@ -142,21 +147,21 @@ const JuegoVista = () =>{
                         </Rating>
                         {juego.puntuacion}
                     </div>
-                    <p>
+                    <p style={{textAlign:"justify"}}>
                        {juego.descripcion}
                     </p>
                 </div>
 
-                <div className="tarjeta card card-body">
+                <div className="tarjeta card card-body" style={{width:"200px"}}>
                 {userData && (
                         <>
                             {isLiked() ? 
                                 <button className="btn" onClick={Like}>
-                                    <i style={{color: "red"}} className="bi bi-heart-fill"></i>
+                                    <i style={{color: "red"}} className="bi bi-check-circle-fill"></i>
                                 </button>
                                 :
                                 <button className="btn" onClick={Like}>
-                                    <i className="bi bi-heart"></i>
+                                    <i className="bi bi-check-circle"></i>
                                 </button>
                             }
                             {isPlayed() ? 

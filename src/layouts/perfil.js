@@ -10,11 +10,13 @@ import { Grid } from "@mui/material"
 import Lista from "../components/lista"
 import Resena from "../components/resena"
 import NewListaDialog from "../components/new-lista-dialog"
+import cargaTiempoService from "../services/cargaTiempoService"
 
 
 const Perfil = ({setUser}) => {
     const navigate = useNavigate()
     const {userData} = useAuth()
+
     const [resenas, setResenas] = useState(null);
     const [listas, setListas] = useState(null);
     const { uid } = useParams();
@@ -31,8 +33,12 @@ const Perfil = ({setUser}) => {
     const handleSettings = async () => {
         navigate("/settings")
     }
+    
 
     useEffect(()=>{
+        const componente = 'perfil'; // Puedes usar un nombre único para identificar el componente
+        cargaTiempoService.startTimer(componente);
+
         const cargaResenas = async () =>{
             const datos  = await getDocumentos("Resenas", "==", "usuario", userData.uid)
             setResenas(datos)
@@ -45,6 +51,9 @@ const Perfil = ({setUser}) => {
             cargaResenas()
             cargaListas()
         }
+
+        const tiempoCarga = cargaTiempoService.stopTimer(componente);
+        console.log(`Tiempo de carga del componente <perfil>: ${tiempoCarga} ms`);
     }, [userData, valor]) 
 
     const isYourUser = () =>{
@@ -59,7 +68,6 @@ const Perfil = ({setUser}) => {
     }
 
     const handleOpenDialogNewLista = () => {
-        console.log("ASADASDDAS")
         setOpenDialogNewLista(true);
       };
 
@@ -149,9 +157,8 @@ const Perfil = ({setUser}) => {
                 <Grid container spacing={2}>
                     
                     {listas.map((lista) => (
-                            console.log("Lista",lista),
-                            <Grid item xs={6} md={4}>
-                                    <Lista key={lista.id} lista={lista}></Lista>
+                            <Grid key={lista.id} item xs={6} md={4}>
+                                    <Lista  lista={lista}></Lista>
                             </Grid>
                     ))}
 
@@ -165,9 +172,8 @@ const Perfil = ({setUser}) => {
                 <hr className="my-3" style={{marginLeft:"20px", marginRight:"20px", marginBottom:"-60px"}}/>
                 <Grid container spacing={2}>
                     {resenas.map((resena) => (
-                            console.log("RESEÑA",resena),
-                            <Grid item xs={12} md={6}>
-                                    <Resena key={resena.id} parametro={resena} actualizarPadre={actualizaValor}></Resena>
+                            <Grid key={resena.id} item xs={12} md={6}>
+                                    <Resena  parametro={resena} actualizarPadre={actualizaValor}></Resena>
                             </Grid>
                     ))}
 

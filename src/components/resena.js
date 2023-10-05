@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import '../styles/resena.css';
 import { Rating } from "react-simple-star-rating";
+import cargaTiempoService from "../services/cargaTiempoService";
 
 const Resena = ({parametro, actualizarPadre}) =>{
 
@@ -16,7 +17,11 @@ const Resena = ({parametro, actualizarPadre}) =>{
     const { userData } = useAuth();
     const { setUserData } = useAuth();
 
+    
     useEffect(() => {
+        const componente = 'resena'; // Puedes usar un nombre único para identificar el componente
+        cargaTiempoService.startTimer(componente);
+
         let isMounted = true;
         const fetchUsuario = async () => {
 
@@ -38,6 +43,8 @@ const Resena = ({parametro, actualizarPadre}) =>{
             fetchJuego();
         }
       
+        const tiempoCarga = cargaTiempoService.stopTimer(componente);
+        console.log(`Tiempo de carga del componente <resena>: ${tiempoCarga} ms`);
         return () => {
             isMounted = false; // Evitar que las actualizaciones posteriores afecten
         };
@@ -55,8 +62,7 @@ const Resena = ({parametro, actualizarPadre}) =>{
 
             const updatedState = { ...userData };
             updatedState.resenas_like.push(resena.id);
-            console.log("USER", userData)
-            console.log("Reseña", resena)
+
 
             await updateDocument('Usuarios', updatedState, userData.uid)
             await updateDocument('Resenas', updateResena, resena.id)
@@ -67,7 +73,6 @@ const Resena = ({parametro, actualizarPadre}) =>{
             
 
         } else{
-            console.log('RESEÑA', resena)
             const updateResena = { ...resena }
             updateResena.num_likes-=1
 
@@ -79,7 +84,6 @@ const Resena = ({parametro, actualizarPadre}) =>{
             if (indice !== -1){
                 estadoActualizado.resenas_like.splice(indice, 1);
             }
-           // console.log("USER", userData)
 
             await updateDocument('Usuarios', estadoActualizado, userData.uid)
             await updateDocument('Resenas', updateResena, resena.id)
@@ -93,7 +97,6 @@ const Resena = ({parametro, actualizarPadre}) =>{
 
     const isLiked = () => {
         
-        //console.log(userData.resenas_like.includes(resena.id), userData.resenas_like.length)
         return userData.resenas_like.includes(resena.id)
     }
 

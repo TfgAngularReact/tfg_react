@@ -8,6 +8,7 @@ import Jugados from "../components/jugados";
 import JuegosLike from "../components/juegos-like";
 import { getDocument } from "../services/fireStoreService";
 import { useParams } from "react-router-dom";
+import cargaTiempoService from "../services/cargaTiempoService";
 
 
 
@@ -26,11 +27,15 @@ const Juegos = () => {
     };
 
     React.useEffect(()=>{
+        const componente = 'juego'; // Puedes usar un nombre único para identificar el componente
+        cargaTiempoService.startTimer(componente);
         const cargaUsuario = async () => {
             const datos = await getDocument('Usuarios', uid);
             setUserData(datos);
         }
         cargaUsuario();
+        const tiempoCarga = cargaTiempoService.stopTimer(componente);
+        console.log(`Tiempo de carga del componente <juego>: ${tiempoCarga} ms`);
     }, [])
 
     if (!userData) {
@@ -49,7 +54,7 @@ const Juegos = () => {
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <TabList onChange={handleChange} aria-label="lab API tabs example"  centered>
                     <Tab label="Jugados" value="1" />
-                    <Tab label="Me gusta" value="2" />
+                    <Tab label="Pendientes" value="2" />
                 </TabList>
                 </Box>
                 <TabPanel value='1'>
